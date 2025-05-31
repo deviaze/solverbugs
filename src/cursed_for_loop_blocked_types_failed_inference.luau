@@ -1,5 +1,7 @@
 --!nolint LocalShadow
 
+-- Started erroring in 675
+
 -- really weird one where i needed to retain a bunch more functions to replicate the issue
 -- modifying str.splitlines' function body to return nil :: any (thereby coercing into { string }) does NOT break the solver
 
@@ -11,18 +13,7 @@ function str.startswith(s: string, prefix: string): boolean
 end
 
 function str.trimback(s: string, ...: string): string
-    local patterns = {...}
-    if #patterns == 0 then
-        s = string.gsub(s, "%s*$", "")
-    else
-        for _, pattern in patterns do
-            while string.find(s, pattern .. "$") do
-                s = string.gsub(s, pattern .. "$", "")
-            end
-        end
-    end
-    
-    return s
+    return ""
 end
 
 --- unindents multiline string by `count` characters; lines separated by `sep` (default "\n")
@@ -32,12 +23,12 @@ function str.unindent(s: string, whitespace_type: "Tabs" | "Spaces", count: numb
 
     local result = {}
     --- if str.splitlines returns `nil :: any` it doesn't break here???
-    for _, line in str.splitlines(s) do
-        if str.startswith(line, indent) then
-            local trimmed_line = string.gsub(line, "^" .. indent, "")
+    for _, line in str.splitlines(s) do -- on 'line': TypeError: Type '*blocked-77758*' could not be converted into 'string'
+        if str.startswith(line, indent) then -- blocked cant convert to string
+            local trimmed_line = string.gsub(line, "^" .. indent, "") -- TypeError: Type function instance refine<string, *blocked-82656*> is uninhabited
             table.insert(result, trimmed_line)
         else
-            table.insert(result, line)
+            table.insert(result, line) -- TypeError: Type function instance refine<*blocked-83240*, ~*blocked-83241*> is uninhabited
         end
     end
 
