@@ -4,6 +4,7 @@ type Cat = {
 	name: string,
 	age: number,
 	actions: {
+		otherfield: string, -- this field being missing isn't reported in the self.actions TypeError
 		meow: () -> string,
 	}
 }
