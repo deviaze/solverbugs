@@ -36,3 +36,7 @@ local function errors_sometimes(cat: string): string
         err("meow") -- using error instead of err here does the intended behavior
     end
 end -- TypeError: Not all codepaths in this function return 'string'
+
+local hmm = (nil :: any) :: () -> string?
+local ok_or_error = hmm() or error("oops") -- hmm is correctly typed as string
+local ok_or_err = hmm() or err("oops") -- this works correctly! ok_or_err is correctly typed as string
