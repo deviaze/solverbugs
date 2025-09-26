@@ -15,5 +15,6 @@ local function new(): Cat
 	self.age = 12
 	self.actions = {} -- TypeError: Table type '{ meow: (...any) -> string }' not compatible with type '{ meow: (...any) -> string }' because the former is missing field 'meow'
 	self.actions.meow = function() return "meow" end
+	self.actions.otherfield = "hi"
 	return self
 end
