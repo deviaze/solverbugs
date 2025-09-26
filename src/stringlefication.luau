@@ -2,7 +2,9 @@ type function minimal(t: type): type
     return types.singleton("{ meow: string, cats: { number } }")
 end
 
-local min = {} :: minimal<"hi">
+local min = "" :: minimal<"hi">
+-- local min: "\123 meow: string, cats: \123 number } }"
+local minbad = {} :: minimal<"hi">
 -- TypeError: Cannot cast '{  }' into '"\123 meow: string, cats: \123 number } }"' because the types are unrelated
 
 type Cat = setmetatable<{
