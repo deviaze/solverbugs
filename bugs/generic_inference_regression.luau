@@ -45,15 +45,15 @@ local function try_read_json(path: string, strip_comments: boolean?): string | e
     end
 end
 
---- Additionally, I have a function `ecall` that does the exact opposite, it throws any errors from a
---- function that returns T | error and returns T
+--- Additionally, I have a function `ecall` that does the exact opposite, it returns a function
+--- that when called, throws any errors from a function that returns T | error and returns T
 
 type ecall = <T, A...>(f: (A...) -> T | error) -> (A...) -> T
 local ecall = function() end :: ecall
 
 local content = ecall(function()
     return try_read_json("./some.json")
-end) 
+end)()
 -- content used to be typed as `string` here since any error values returned by
 -- try_read_json would be thrown as actual Luau errors instead of returned as an 'error' userdata
 
