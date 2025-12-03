@@ -7,8 +7,6 @@
 --- correctly using the type inferred by the return of `protected_callback`, 
 --- but recently, second return is always typed as `unknown` instead of `T | error`
 
-type error = {} -- this is supposed to be a runtime-provided userdata with typeof(err) == "error"
-
 type p_call = <T, Args...>(protected_callback: (any) -> T, Args...) -> (boolean, T | error)
 local p_call = function() end :: p_call
 
